@@ -7,9 +7,10 @@
   </script>
   <p class="error">Sorry, your session has expired.</p>
 </c:if>
+
 <p>To determine the most appropriate CF type, please select your community:</p>
 <c:choose>
-  <%-- Need the communities to load platforms by community. --%>
+  <%-- Preprocessing: Need the communities values to load platforms by community. --%>
   <c:when test="${fn:length(communities) gt 0}">
     <script>
       $(function () {
@@ -60,12 +61,15 @@
                 <small>
                   ${platform.name}<br> (${platform.cfType})
                 </small>
-                <input type="radio" name="platform" value="${fn:replace(platform.name, ' ', '_')}"
-                  <%-- Mark as checked if platform has already been chosen. --%>
+                <%--<input type="radio" name="platform" value="${fn:replace(platform.name, ' ', '_')}"
+                  <%-- Mark as checked if platform has already been chosen.
                   <c:if test="${not empty data.platform && data.platform == fn:replace(platform.name, ' ', '_')}">
                     checked
                   </c:if>
                 />
+                --%>
+                <form:radiobutton path="platform" value="${fn:replace(platform.name, ' ', '_')}"/>
+                <form:errors path="platform" cssClass="error" />
               </li>
             </c:forEach>
           </ul>

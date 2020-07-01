@@ -45,7 +45,6 @@ public class CfTypeController {
   private static final Logger logger = LogManager.getLogger(CfTypeController.class);
   private final CfTypeValidator cfTypeValidator;
 
-
   @Resource(name = "wizardManager")
   private WizardManager wizardManager;
 
@@ -129,7 +128,7 @@ public class CfTypeController {
    * @param result The BindingResult for error handling.
    * @param request HttpServletRequest needed to pass to the resourceManager to get client IP.
    * @param response HttpServletResponse needed for setting cookie.
-   * @return RedirectView to next step.
+   * @return ModelAndView redirect to next step if successful, or prior view if fails validation.
    * @throws RosettaDataException If unable to process the CF type data.
    * @throws RosettaFileException If unable to create transaction log.
    */
@@ -140,6 +139,8 @@ public class CfTypeController {
     // Check for validation errors.
     if (result.hasErrors()) {
       logger.info("Validation errors detected in create user form data for " + request.getRemoteAddr() + " Returning user to form view.");
+      //logger.info(result.toString());
+
       return new ModelAndView(new RedirectView("/cfType", true));
     }
 
