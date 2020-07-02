@@ -86,7 +86,7 @@ public class CfTypeController {
     }
 
     // Add command object to Model.
-    model.addAttribute("command", "WizardData");
+    model.addAttribute("command", wizardData);
     // Add form-backing object.
     model.addAttribute("data", wizardData);
     // Add current step to the Model (used by view to keep track of where we are in the wizard).
@@ -133,15 +133,41 @@ public class CfTypeController {
    * @throws RosettaFileException If unable to create transaction log.
    */
   @RequestMapping(value = "/cfType", method = RequestMethod.POST)
-  public ModelAndView processCFType(@Valid WizardData wizardData, BindingResult result, HttpServletRequest request,
+  public ModelAndView processCFType(@Valid WizardData wizardData, BindingResult result, Model model, HttpServletRequest request,
       HttpServletResponse response) throws RosettaDataException, RosettaFileException {
 
     // Check for validation errors.
     if (result.hasErrors()) {
       logger.info("Validation errors detected in create user form data for " + request.getRemoteAddr() + " Returning user to form view.");
-      //logger.info(result.toString());
+      logger.info(result.toString());
+      // Have we visited this page before during this session?
+      Cookie rosettaCookie = WebUtils.getCookie(request, "rosetta");
 
-      return new ModelAndView(new RedirectView("/cfType", true));
+      boolean customFileAttributesStep = false;
+      if (Objects.nonNull(rosettaCookie)) {
+        customFileAttributesStep = wizardManager.customFileAttributesStep(rosettaCookie.getValue());
+      }
+
+      // Add command object to Model.
+      model.addAttribute("command", wizardData);
+      // Add form-backing object.
+      model.addAttribute("data", wizardData);
+      // Add current step to the Model (used by view to keep track of where we are in the wizard).
+      model.addAttribute("currentStep", "cfType");
+      // Add whether we need to show the custom file attributes step in the wizard menu.
+      model.addAttribute("customFileAttributesStep", customFileAttributesStep);
+      // Add communities data to Model (for platform display).
+      model.addAttribute("communities", resourceManager.getCommunities());
+      // Add CF types data to Model (for direct display).
+      model.addAttribute("cfTypes", resourceManager.getCfTypes());
+      // Add metadata profile data to Model (for direct display).
+      model.addAttribute("metadataProfiles", resourceManager.getMetadataProfiles());
+
+      // The currentStep variable will determine which jsp frag to load in the wizard.
+      return new ModelAndView("wizard");
+
+   //   model.addAttribute("result", result);
+   //   return new ModelAndView(new RedirectView("/cfType", true));
     }
 
     // Have we visited this page before during this session?

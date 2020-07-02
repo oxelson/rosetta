@@ -42,7 +42,7 @@ public class CfTypeValidator extends CommonValidator implements Validator {
   }
 
   /**
-   * Validates the CF type data the user selected/inputted.
+   * Validates the user-provided CF type data.
    *
    * @param obj    The object to validate.
    * @param errors Object in which to store any validation errors.
@@ -50,7 +50,6 @@ public class CfTypeValidator extends CommonValidator implements Validator {
   @Override
   public void validate(@NotNull Object obj, @NotNull Errors errors) {
     WizardData data = (WizardData) obj;
-    logger.info(data.toString());
     String cfType = data.getCfType();
     String platform = data.getPlatform();
     String metadataProfile = data.getMetadataProfile();
@@ -158,8 +157,8 @@ public class CfTypeValidator extends CommonValidator implements Validator {
    */
   private void validateRequiredData(String cfType, String platform, Errors errors) {
     if (validateNotEmpty(cfType) && validateNotEmpty(platform)) {
-      logError("Required data CF type or platform not provided");
-      errors.reject("cfType.missingData");
+      logError("Required data CF type or platform not provided.");
+      errors.reject("platform.missingData");
     }
   }
 }

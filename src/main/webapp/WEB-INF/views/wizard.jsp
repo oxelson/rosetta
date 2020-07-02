@@ -25,7 +25,7 @@ The default index page gets redirected to here.
 
       <c:choose>
         <c:when test="${not empty currentStep}">
-          <form:form id ="FORM" action="${baseUrl}/${currentStep}" modelAttribute="${command}"
+          <form:form id ="FORM" action="${baseUrl}/${currentStep}" modelAttribute="command"
                     method="POST" enctype="multipart/form-data">
             <sec:csrfInput />
             <nav>
@@ -89,6 +89,7 @@ The default index page gets redirected to here.
           </form:form>
         </c:when>
         <c:otherwise>
+          <%-- Data is not being passed via the model from the controller.  Something has gone very wrong. --%>
           <p class="error">
               Unable to load the Rosetta wizard.
               <spring:message code="fatal.error.message"/>

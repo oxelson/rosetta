@@ -77,7 +77,7 @@ public class FileUploadController {
       uploadedFileCmd = new UploadedFileCmd();
     }
     // Add command object to Model.
-    model.addAttribute("command", "uploadedFileCmd");
+    model.addAttribute("command", new UploadedFileCmd());
     // Add form-backing object.
     model.addAttribute("uploadedFileCmd", uploadedFileCmd);
     // Add current step to the Model.

@@ -9,19 +9,22 @@
 </c:if>
 
 <p>To determine the most appropriate CF type, please select your community:</p>
+
 <c:choose>
-  <%-- Preprocessing: Need the communities values to load platforms by community. --%>
+  <%-- Preprocessing: Need the communities values to load platforms by community.  --%>
   <c:when test="${fn:length(communities) gt 0}">
+    <%-- Find the tab to open. --%>
     <script>
       $(function () {
-        var tabIndex = 0;
+        let tabIndex = 0; <%-- first tab has 0 index. --%>
         <c:choose>
           <%-- If platform or cfType selection exists, find the index number tab & activate it. --%>
           <c:when test="${not empty data.cfType}">
+            <%-- cfType exists, so activate the last tab. --%>
             tabIndex = ${fn:length(communities)};
           </c:when>
           <c:otherwise>
-            <%-- Start at index 1 as 0 is already declared. --%>
+            <%-- Start at index 1 as 0 is already declared above in intialization step. --%>
             <c:forEach begin="1" end="${fn:length(communities) - 1 }" varStatus="loop">
               <c:forEach items="${communities[loop.index].platforms}" var="platform">
                 <c:if test="${not empty data.platform && data.platform == fn:replace(platform.name, ' ', '_')}">
@@ -31,7 +34,7 @@
             </c:forEach>
           </c:otherwise>
         </c:choose>
-        $("#tabs").tabs({active: tabIndex});
+        $("#tabs").tabs({active: tabIndex}); <%-- Activate tab --%>
         $(".platforms").selectable();
       });
     </script>
@@ -61,13 +64,6 @@
                 <small>
                   ${platform.name}<br> (${platform.cfType})
                 </small>
-                <%--<input type="radio" name="platform" value="${fn:replace(platform.name, ' ', '_')}"
-                  <%-- Mark as checked if platform has already been chosen.
-                  <c:if test="${not empty data.platform && data.platform == fn:replace(platform.name, ' ', '_')}">
-                    checked
-                  </c:if>
-                />
-                --%>
                 <form:radiobutton path="platform" value="${fn:replace(platform.name, ' ', '_')}"/>
                 <form:errors path="platform" cssClass="error" />
               </li>
@@ -81,19 +77,21 @@
 
         <div id="cfTypeSpecified">
           <p>I know what I'm doing and I want to directly select a CF Type:</p>
-          <select name="cfType">
+          <form:select path="cfType">
             <option value="">Select a CF Type</option>
               <%-- Populate the cfType field if the data exists & it matches --%>
-            <c:forEach items="${cfTypes}" var="cfType">
-              <option
+              <c:forEach items="${cfTypes}" var="cfType">
+                <form:option value="${fn:replace(cfType.name, ' ', '_')}">
+                  <%--
                   <c:if test="${not empty data.cfType && data.cfType == fn:replace(cfType.name, ' ', '_')}">
                     selected
                   </c:if>
-                  value="${fn:replace(cfType.name, ' ', '_')}">
+                  --%>
                   ${cfType.name}
-              </option>
-            </c:forEach>
-          </select>
+                </form:option>
+              </c:forEach>
+          </form:select>
+          <form:errors path="cfType" cssClass="error" />
 
           <%-- Load the metadata profile selection. --%>
           <c:if test="${fn:length(metadataProfiles) gt 0}">
@@ -102,20 +100,22 @@
               <ul>
                 <c:forEach items="${metadataProfiles}" var="metadataProfile">
                   <li>
-                    <label>
-                      <input type="checkbox" name="metadataProfile" value="${metadataProfile.name}"
-                        <%-- Everyone gets the CF profile. --%>
-                        <c:if test="${metadataProfile.name == 'CF'}">
-                          checked disabled
-                        </c:if>
-                        <c:if test="${not empty data.metadataProfile && fn:contains(data.metadataProfile, metadataProfile.name)}">
-                          checked
-                        </c:if>
-                      /> ${metadataProfile.name}
+                    <label for="metadataProfile">
+                      <c:choose>
+                        <c:when test="${metadataProfile.name == 'CF'}">
+                          <%-- Everyone gets the CF profile. --%>
+                          <form:checkbox path="metadataProfile" value="${metadataProfile.name}" disabled="true"/>
+                        </c:when>
+                        <c:otherwise>
+                          <form:checkbox path="metadataProfile" value="${metadataProfile.name}"/>
+                        </c:otherwise>
+                      </c:choose>
+                      ${metadataProfile.name}
                     </label>
                   </li>
                 </c:forEach>
               </ul>
+              <form:errors path="metadataProfile" cssClass="error" />
             </div><!-- /#metadataProfile -->
           </c:if> <%-- /${fn:length(metadataProfiles) gt 0} --%>
         </div><!-- /#cfTypeSpecified -->
@@ -138,7 +138,7 @@
     "/>
   </c:when>
   <c:otherwise>
-    <p class="error">Unable to load CF type selection. <spring:message
-        code="fatal.error.message"/></p>
+    <%-- Fatal error: no communities objects to process. --%>
+    <p class="error">Unable to load CF type selection. <spring:message code="fatal.error.message"/></p>
   </c:otherwise>
 </c:choose>
