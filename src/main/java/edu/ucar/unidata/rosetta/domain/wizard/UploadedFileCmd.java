@@ -5,15 +5,18 @@
 
 package edu.ucar.unidata.rosetta.domain.wizard;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Data;
 
 /**
- * Form-backing object for the wizard to collect a collection of uploaded files.
- * Used for dynamic form binding in Spring to collect multiple uploaded file objects.
- * The term 'Cmd' in the name refers to the command object used in form data binding.
+ * Form-backing object for the wizard to collect a collection of uploaded files. Used for dynamic form binding in Spring
+ * to collect multiple uploaded file objects. The term 'Cmd' in the name refers to the command object used in form data
+ * binding. Lombok automatic generation of getters, setters, equals, hashCode and toString.
+ *
+ * @author oxelson
  */
+@Data
 public class UploadedFileCmd extends WizardData {
 
   private String dataFileType;
@@ -60,45 +63,6 @@ public class UploadedFileCmd extends WizardData {
   }
 
   /**
-   * Returns the data file type.
-   * (Corresponds to fileType resource).
-   *
-   * @return The data file type.
-   */
-  public String getDataFileType() {
-    return dataFileType;
-  }
-
-  /**
-   * Sets the data file type.
-   * (Corresponds to fileType resource).
-   *
-   * @param dataFileType The data file type.
-   */
-  public void setDataFileType(String dataFileType) {
-    this.dataFileType = dataFileType;
-  }
-
-  /**
-   * Returns a list of uploaded files.
-   *
-   * @return The uploaded files.
-   */
-  public List<UploadedFile> getUploadedFiles() {
-    return uploadedFiles;
-  }
-
-  /**
-   * Sets a list of uploaded files.
-   *
-   * @param uploadedFiles The uploaded files.
-   */
-  public void setUploadedFiles(List<UploadedFile> uploadedFiles) {
-    // this.uploadedFiles.clear();
-    this.uploadedFiles = uploadedFiles;
-  }
-
-  /**
    * Updates one of the existing files in the uploaded files.
    *
    * @param replacementFile The file to replace.
@@ -110,15 +74,5 @@ public class UploadedFileCmd extends WizardData {
         this.uploadedFiles.set(index, replacementFile);
       }
     }
-  }
-
-  /**
-   * String representation of this object.
-   *
-   * @return The string representation.
-   */
-  @Override
-  public String toString() {
-    return ToStringBuilder.reflectionToString(this);
   }
 }
