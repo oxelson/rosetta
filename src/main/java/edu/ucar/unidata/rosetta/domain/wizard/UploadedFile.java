@@ -7,6 +7,7 @@ package edu.ucar.unidata.rosetta.domain.wizard;
 
 import java.io.Serializable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 /**
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
  * @author oxelson
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class UploadedFile extends WizardData implements Serializable {
 
   private String description;
@@ -25,8 +27,7 @@ public class UploadedFile extends WizardData implements Serializable {
   private String id;
   private boolean required;
 
-  public UploadedFile() {
-  }
+  public UploadedFile() {}
 
   public UploadedFile(CommonsMultipartFile file, String fileName, FileType fileType) {
     setFile(file);

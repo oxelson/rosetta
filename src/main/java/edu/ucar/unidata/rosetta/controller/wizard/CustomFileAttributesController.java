@@ -41,9 +41,9 @@ public class CustomFileAttributesController {
   /**
    * Accepts a GET request for access to custom file type attribute collection step of the wizard.
    *
-   * @param model         The Model object to be populated.
+   * @param model The Model object to be populated.
    * @param redirectAttrs A specialization of the model to pass along message if redirected back to starting step.
-   * @param request       The HttpServletRequest used to retrieve the cookie.
+   * @param request The HttpServletRequest used to retrieve the cookie.
    * @return View and the Model for the wizard to process.
    * @throws RosettaFileException For any file I/O or JSON conversions problems while parsing data.
    */
@@ -89,12 +89,12 @@ public class CustomFileAttributesController {
    * This step is only accessed/processed when the user uploads a 'custom' data file type (specified during prior step).
    * Otherwise, if they upload a known data type, they are taken directly to global metadata collection step.
    *
-   * @param wizardData    The form-backing object.
-   * @param submit        The value sent via the submit button.
-   * @param result        The BindingResult for error handling.
-   * @param model         The Model object to be populated by file upload data in the next step.
+   * @param wizardData The form-backing object.
+   * @param submit The value sent via the submit button.
+   * @param result The BindingResult for error handling.
+   * @param model The Model object to be populated by file upload data in the next step.
    * @param redirectAttrs A specialization of the model to pass along message if redirected back to starting step.
-   * @param request       The HttpServletRequest used to retrieve the cookie.
+   * @param request The HttpServletRequest used to retrieve the cookie.
    * @return Redirect to next step.
    */
   @RequestMapping(value = "/customFileTypeAttributes", method = RequestMethod.POST)

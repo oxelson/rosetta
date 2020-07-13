@@ -8,6 +8,7 @@ package edu.ucar.unidata.rosetta.domain.wizard;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * Form-backing object for the wizard to collect a collection of uploaded files. Used for dynamic form binding in Spring
@@ -17,6 +18,7 @@ import lombok.Data;
  * @author oxelson
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class UploadedFileCmd extends WizardData {
 
   private String dataFileType;

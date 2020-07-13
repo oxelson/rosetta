@@ -51,9 +51,9 @@ public class VariableMetadataController {
   /**
    * Accepts a GET request for access to variable metadata collection step of the wizard.
    *
-   * @param model         The Model object to be populated.
+   * @param model The Model object to be populated.
    * @param redirectAttrs A specialization of the model to pass along message if redirected back to starting step.
-   * @param request       The HttpServletRequest used to retrieve the cookie.
+   * @param request The HttpServletRequest used to retrieve the cookie.
    * @return View and the Model for the wizard to process.
    * @throws RosettaFileException For any file I/O or JSON conversions problems while parsing data.
    */
@@ -101,11 +101,11 @@ public class VariableMetadataController {
    * persists it to the database. Redirects user to next step or previous step depending on submitted form button (Next
    * or Previous).
    *
-   * @param wizardData    The form-backing object.
-   * @param submit        The value sent via the submit button.
-   * @param result        The BindingResult for error handling.
+   * @param wizardData The form-backing object.
+   * @param submit The value sent via the submit button.
+   * @param result The BindingResult for error handling.
    * @param redirectAttrs A specialization of the model to pass along message if redirected back to starting step.
-   * @param request       The HttpServletRequest used to retrieve the cookie.
+   * @param request The HttpServletRequest used to retrieve the cookie.
    * @return Redirect to next step.
    * @throws IllegalStateException If cookie is null.
    */

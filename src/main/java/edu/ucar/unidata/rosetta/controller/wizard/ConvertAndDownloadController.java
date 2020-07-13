@@ -40,9 +40,9 @@ public class ConvertAndDownloadController {
    * Accepts a GET request for access to convert and download step of the wizard. Displays the converted data file and
    * rosetta template for download.
    *
-   * @param model         The Model object to be populated.
+   * @param model The Model object to be populated.
    * @param redirectAttrs A specialization of the model to pass along message if redirected back to starting step.
-   * @param request       The HttpServletRequest used to retrieve the cookie.
+   * @param request The HttpServletRequest used to retrieve the cookie.
    * @return View and the Model for the wizard to process.
    * @throws RosettaFileException If unable to create the template file.
    * @throws RosettaDataException If unable to parse data file with delimiter.
@@ -81,7 +81,7 @@ public class ConvertAndDownloadController {
    * if the user clicked the 'finished' button, in which case the user's cookie is invalidated (if the client side
    * hasn't already done so). The use is then redirected back to to the starting step of the wizard.
    *
-   * @param request  The HttpServletRequest used to retrieve the cookie.
+   * @param request The HttpServletRequest used to retrieve the cookie.
    * @param response The HttpServletResponse used to invalidate the cookie.
    * @return Redirect to previous step.
    */

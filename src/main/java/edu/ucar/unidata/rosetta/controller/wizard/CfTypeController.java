@@ -66,7 +66,7 @@ public class CfTypeController {
   /**
    * Accepts a GET request for access to CF type selection step of the wizard.
    *
-   * @param model   The Model object to be populated.
+   * @param model The Model object to be populated.
    * @param request HttpServletRequest needed to get the cookie.
    * @return View and the Model for the wizard to process.
    */
@@ -124,9 +124,9 @@ public class CfTypeController {
    * the database. Redirects user to next step or previous step depending on submitted form button (Next or Previous).
    *
    * @param wizardData The form-backing object.
-   * @param result     The BindingResult for error handling.
-   * @param request    HttpServletRequest needed to pass to the resourceManager to get client IP.
-   * @param response   HttpServletResponse needed for setting cookie.
+   * @param result The BindingResult for error handling.
+   * @param request HttpServletRequest needed to pass to the resourceManager to get client IP.
+   * @param response HttpServletResponse needed for setting cookie.
    * @return Redirect to next step.
    * @throws RosettaDataException If unable to process the CF type data.
    * @throws RosettaFileException If unable to create transaction log.

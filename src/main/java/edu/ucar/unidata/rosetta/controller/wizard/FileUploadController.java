@@ -48,9 +48,9 @@ public class FileUploadController {
   /**
    * Accepts a GET request for access to file upload step of the wizard.
    *
-   * @param model         The Model object to be populated.
+   * @param model The Model object to be populated.
    * @param redirectAttrs A specialization of the model to pass along message if redirected back to starting step.
-   * @param request       The HttpServletRequest used to retrieve the cookie.
+   * @param request The HttpServletRequest used to retrieve the cookie.
    * @return View and the Model for the wizard to process.
    */
   @GetMapping
@@ -102,11 +102,11 @@ public class FileUploadController {
    * database. Redirects user to next step or previous step depending on submitted form button (Next or Previous).
    *
    * @param uploadedFileCmd The form-backing object.
-   * @param submit          The value sent via the submit button.
-   * @param result          The BindingResult for error handling.
-   * @param model           The Model object to be populated by file upload data in the next step.
-   * @param redirectAttrs   A specialization of the model to pass along message if redirected back to starting step.
-   * @param request         The HttpServletRequest used to retrieve the cookie.
+   * @param submit The value sent via the submit button.
+   * @param result The BindingResult for error handling.
+   * @param model The Model object to be populated by file upload data in the next step.
+   * @param redirectAttrs A specialization of the model to pass along message if redirected back to starting step.
+   * @param request The HttpServletRequest used to retrieve the cookie.
    * @return Redirect to next step.
    * @throws RosettaFileException If unable to write file(s) to disk or a file conversion exception occurred.
    */
