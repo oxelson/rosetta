@@ -15,8 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -25,8 +26,11 @@ import org.springframework.web.util.WebUtils;
 
 /**
  * Controller for collecting global metadata.
+ *
+ * @author oxelson
  */
 @Controller
+@RequestMapping("/globalMetadata")
 public class GlobalMetadataController {
 
   @Resource(name = "metadataManager")
@@ -38,12 +42,12 @@ public class GlobalMetadataController {
   /**
    * Accepts a GET request for access to global metadata collection step of the wizard.
    *
-   * @param model The Model object to be populated.
+   * @param model         The Model object to be populated.
    * @param redirectAttrs A specialization of the model to pass along message if redirected back to starting step.
-   * @param request The HttpServletRequest used to retrieve the cookie.
+   * @param request       The HttpServletRequest used to retrieve the cookie.
    * @return View and the Model for the wizard to process.
    */
-  @RequestMapping(value = "/globalMetadata", method = RequestMethod.GET)
+  @GetMapping
   public ModelAndView displayGlobalMetadataForm(Model model, RedirectAttributes redirectAttrs,
       HttpServletRequest request) {
 
@@ -76,19 +80,19 @@ public class GlobalMetadataController {
   }
 
   /**
-   * Accepts a POST request from global metadata collection step of the wizard. Processes the
-   * submitted data and persists it to the database. Redirects user to next step or previous step
-   * depending on submitted form button (Next or Previous).
+   * Accepts a POST request from global metadata collection step of the wizard. Processes the submitted data and
+   * persists it to the database. Redirects user to next step or previous step depending on submitted form button (Next
+   * or Previous).
    *
-   * @param wizardData The form-backing object.
-   * @param submit The value sent via the submit button.
-   * @param result The BindingResult for error handling.
+   * @param wizardData    The form-backing object.
+   * @param submit        The value sent via the submit button.
+   * @param result        The BindingResult for error handling.
    * @param redirectAttrs A specialization of the model to pass along message if redirected back to starting step.
-   * @param request The HttpServletRequest used to retrieve the cookie.
+   * @param request       The HttpServletRequest used to retrieve the cookie.
    * @return Redirect to next step.
    * @throws RosettaDataException If unable to populate the metadata object.
    */
-  @RequestMapping(value = "/globalMetadata", method = RequestMethod.POST)
+  @PostMapping
   public ModelAndView processGlobalMetadata(WizardData wizardData, @RequestParam("submit") String submit,
       BindingResult result, RedirectAttributes redirectAttrs, HttpServletRequest request) throws RosettaDataException {
 

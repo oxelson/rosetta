@@ -18,14 +18,15 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Main controller for the Rosetta batch processing feature.
  */
 @Controller
+@RequestMapping("/batchProcess")
 public class BatchProcessController {
 
   private static final Logger logger = LogManager.getLogger();
@@ -43,7 +44,7 @@ public class BatchProcessController {
    * @throws IOException If unable to access template file.
    * @throws RosettaDataException If unable to parse data file with given delimiter.
    */
-  @RequestMapping(value = "/batchProcess", method = RequestMethod.POST, produces = "application/zip")
+  @PostMapping(produces = "application/zip")
   @ResponseBody
   public Resource batchProcess(BatchProcessZip batchZipFile, HttpServletRequest request, HttpServletResponse response)
       throws IOException, RosettaDataException {

@@ -26,17 +26,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.WebUtils;
 
 /**
  * Controller for collecting CF Type information.
+ *
+ * @author oxelson
  */
 @Controller
+@RequestMapping("/cfType")
 public class CfTypeController {
 
   private static final Logger logger = LogManager.getLogger(CfTypeController.class);
@@ -62,11 +66,11 @@ public class CfTypeController {
   /**
    * Accepts a GET request for access to CF type selection step of the wizard.
    *
-   * @param model The Model object to be populated.
+   * @param model   The Model object to be populated.
    * @param request HttpServletRequest needed to get the cookie.
    * @return View and the Model for the wizard to process.
    */
-  @RequestMapping(value = "/cfType", method = RequestMethod.GET)
+  @GetMapping
   public ModelAndView displayCFTypeSelectionForm(Model model, HttpServletRequest request) {
 
     // Have we visited this page before during this session?
@@ -116,23 +120,20 @@ public class CfTypeController {
   }
 
   /**
-   * Accepts a POST request from CF type selection step of the wizard. Processes the submitted data
-   * and persists it to the database. Redirects user to next step or previous step depending on
-   * submitted form button (Next or Previous).
+   * Accepts a POST request from CF type selection step of the wizard. Processes the submitted data and persists it to
+   * the database. Redirects user to next step or previous step depending on submitted form button (Next or Previous).
    *
    * @param wizardData The form-backing object.
-   * @param result The BindingResult for error handling.
-   * @param request HttpServletRequest needed to pass to the resourceManager to get client IP.
-   * @param response HttpServletResponse needed for setting cookie.
+   * @param result     The BindingResult for error handling.
+   * @param request    HttpServletRequest needed to pass to the resourceManager to get client IP.
+   * @param response   HttpServletResponse needed for setting cookie.
    * @return Redirect to next step.
    * @throws RosettaDataException If unable to process the CF type data.
    * @throws RosettaFileException If unable to create transaction log.
    */
-  @RequestMapping(value = "/cfType", method = RequestMethod.POST)
+  @PostMapping
   public ModelAndView processCFType(@Valid WizardData wizardData, BindingResult result, HttpServletRequest request,
       HttpServletResponse response) throws RosettaDataException, RosettaFileException {
-
-    logger.info(wizardData.toString());
 
     // Check for validation errors.
     if (result.hasErrors()) {

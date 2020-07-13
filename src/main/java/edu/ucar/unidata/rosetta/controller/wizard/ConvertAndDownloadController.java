@@ -16,8 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import edu.ucar.unidata.rosetta.service.wizard.WizardManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -25,25 +26,28 @@ import org.springframework.web.util.WebUtils;
 
 /**
  * Main controller for Rosetta application.
+ *
+ * @author oxelson
  */
 @Controller
+@RequestMapping("/convertAndDownload")
 public class ConvertAndDownloadController {
 
   @Resource(name = "wizardManager")
   private WizardManager wizardManager;
 
   /**
-   * Accepts a GET request for access to convert and download step of the wizard.
-   * Displays the converted data file and rosetta template for download.
+   * Accepts a GET request for access to convert and download step of the wizard. Displays the converted data file and
+   * rosetta template for download.
    *
-   * @param model The Model object to be populated.
+   * @param model         The Model object to be populated.
    * @param redirectAttrs A specialization of the model to pass along message if redirected back to starting step.
-   * @param request The HttpServletRequest used to retrieve the cookie.
+   * @param request       The HttpServletRequest used to retrieve the cookie.
    * @return View and the Model for the wizard to process.
    * @throws RosettaFileException If unable to create the template file.
    * @throws RosettaDataException If unable to parse data file with delimiter.
    */
-  @RequestMapping(value = "/convertAndDownload", method = RequestMethod.GET)
+  @GetMapping
   public ModelAndView displayConvertedFileDownloadPage(Model model, RedirectAttributes redirectAttrs,
       HttpServletRequest request) throws RosettaFileException, RosettaDataException {
 
@@ -73,16 +77,15 @@ public class ConvertAndDownloadController {
   }
 
   /**
-   * Accepts a POST request from convert and download step of the wizard. The only purpose of this
-   * method is to capture if the user clicked the 'finished' button, in which case the user's cookie
-   * is invalidated (if the client side hasn't already done so). The use is then redirected back to
-   * to the starting step of the wizard.
+   * Accepts a POST request from convert and download step of the wizard. The only purpose of this method is to capture
+   * if the user clicked the 'finished' button, in which case the user's cookie is invalidated (if the client side
+   * hasn't already done so). The use is then redirected back to to the starting step of the wizard.
    *
-   * @param request The HttpServletRequest used to retrieve the cookie.
+   * @param request  The HttpServletRequest used to retrieve the cookie.
    * @param response The HttpServletResponse used to invalidate the cookie.
    * @return Redirect to previous step.
    */
-  @RequestMapping(value = "/convertAndDownload", method = RequestMethod.POST)
+  @PostMapping
   public ModelAndView processConvertAndDownload(HttpServletRequest request, HttpServletResponse response) {
 
     // Invalidate the cookie.

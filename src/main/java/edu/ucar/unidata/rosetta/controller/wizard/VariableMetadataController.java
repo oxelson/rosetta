@@ -18,8 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -28,8 +29,11 @@ import org.springframework.web.util.WebUtils;
 
 /**
  * Controller for collecting variable metadata.
+ *
+ * @author oxelson
  */
 @Controller
+@RequestMapping("/variableMetadata")
 public class VariableMetadataController {
 
   @Resource(name = "metadataManager")
@@ -47,13 +51,13 @@ public class VariableMetadataController {
   /**
    * Accepts a GET request for access to variable metadata collection step of the wizard.
    *
-   * @param model The Model object to be populated.
+   * @param model         The Model object to be populated.
    * @param redirectAttrs A specialization of the model to pass along message if redirected back to starting step.
-   * @param request The HttpServletRequest used to retrieve the cookie.
+   * @param request       The HttpServletRequest used to retrieve the cookie.
    * @return View and the Model for the wizard to process.
    * @throws RosettaFileException For any file I/O or JSON conversions problems while parsing data.
    */
-  @RequestMapping(value = "/variableMetadata", method = RequestMethod.GET)
+  @GetMapping
   public ModelAndView displayVariableMetadataForm(Model model, RedirectAttributes redirectAttrs,
       HttpServletRequest request) throws RosettaFileException {
 
@@ -65,7 +69,6 @@ public class VariableMetadataController {
       redirectAttrs.addFlashAttribute("message", "session expired");
       return new ModelAndView(new RedirectView("/cfType", true));
     }
-
 
     WizardData wizardData = wizardManager.lookupPersistedWizardDataById(rosettaCookie.getValue());
 
@@ -94,19 +97,19 @@ public class VariableMetadataController {
   }
 
   /**
-   * Accepts a POST request from variable metadata collection step of the wizard. Processes the
-   * submitted data and persists it to the database. Redirects user to next step or previous step
-   * depending on submitted form button (Next or Previous).
+   * Accepts a POST request from variable metadata collection step of the wizard. Processes the submitted data and
+   * persists it to the database. Redirects user to next step or previous step depending on submitted form button (Next
+   * or Previous).
    *
-   * @param wizardData The form-backing object.
-   * @param submit The value sent via the submit button.
-   * @param result The BindingResult for error handling.
+   * @param wizardData    The form-backing object.
+   * @param submit        The value sent via the submit button.
+   * @param result        The BindingResult for error handling.
    * @param redirectAttrs A specialization of the model to pass along message if redirected back to starting step.
-   * @param request The HttpServletRequest used to retrieve the cookie.
+   * @param request       The HttpServletRequest used to retrieve the cookie.
    * @return Redirect to next step.
    * @throws IllegalStateException If cookie is null.
    */
-  @RequestMapping(value = "/variableMetadata", method = RequestMethod.POST)
+  @PostMapping
   public ModelAndView processVariableMetadata(WizardData wizardData, @RequestParam("submit") String submit,
       BindingResult result, RedirectAttributes redirectAttrs, HttpServletRequest request) {
 

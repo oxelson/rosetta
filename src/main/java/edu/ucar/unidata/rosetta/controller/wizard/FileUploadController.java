@@ -17,9 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -28,8 +29,11 @@ import org.springframework.web.util.WebUtils;
 
 /**
  * Controller for handling file uploads.
+ *
+ * @author oxelson
  */
 @Controller
+@RequestMapping("/fileUpload")
 public class FileUploadController {
 
   @Resource(name = "resourceManager")
@@ -44,12 +48,12 @@ public class FileUploadController {
   /**
    * Accepts a GET request for access to file upload step of the wizard.
    *
-   * @param model The Model object to be populated.
+   * @param model         The Model object to be populated.
    * @param redirectAttrs A specialization of the model to pass along message if redirected back to starting step.
-   * @param request The HttpServletRequest used to retrieve the cookie.
+   * @param request       The HttpServletRequest used to retrieve the cookie.
    * @return View and the Model for the wizard to process.
    */
-  @RequestMapping(value = "/fileUpload", method = RequestMethod.GET)
+  @GetMapping
   public ModelAndView displayFileUploadForm(Model model, RedirectAttributes redirectAttrs, HttpServletRequest request) {
 
     // Have we visited this page before during this session?
@@ -94,20 +98,19 @@ public class FileUploadController {
   }
 
   /**
-   * Accepts a POST request from file upload step of the wizard. Processes the submitted data and
-   * persists it to the database. Redirects user to next step or previous step depending on
-   * submitted form button (Next or Previous).
+   * Accepts a POST request from file upload step of the wizard. Processes the submitted data and persists it to the
+   * database. Redirects user to next step or previous step depending on submitted form button (Next or Previous).
    *
    * @param uploadedFileCmd The form-backing object.
-   * @param submit The value sent via the submit button.
-   * @param result The BindingResult for error handling.
-   * @param model The Model object to be populated by file upload data in the next step.
-   * @param redirectAttrs A specialization of the model to pass along message if redirected back to starting step.
-   * @param request The HttpServletRequest used to retrieve the cookie.
+   * @param submit          The value sent via the submit button.
+   * @param result          The BindingResult for error handling.
+   * @param model           The Model object to be populated by file upload data in the next step.
+   * @param redirectAttrs   A specialization of the model to pass along message if redirected back to starting step.
+   * @param request         The HttpServletRequest used to retrieve the cookie.
    * @return Redirect to next step.
    * @throws RosettaFileException If unable to write file(s) to disk or a file conversion exception occurred.
    */
-  @RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
+  @PostMapping
   public ModelAndView processFileUpload(@ModelAttribute("uploadedFileCmd") UploadedFileCmd uploadedFileCmd,
       @RequestParam("submit") String submit, BindingResult result, Model model, RedirectAttributes redirectAttrs,
       HttpServletRequest request) throws RosettaFileException {
