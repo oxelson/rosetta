@@ -16,50 +16,22 @@ import java.util.Map;
 import java.util.Set;
 import edu.ucar.unidata.rosetta.exceptions.RosettaDataException;
 import edu.ucar.unidata.rosetta.util.VariableInfoUtils;
+import lombok.Data;
 import ucar.ma2.Array;
 import ucar.ma2.DataType;
-import ucar.nc2.jni.netcdf.Nc4Iosp;
 
 /**
- * An object to hold parsed data.
+ * An object to hold parsed data. Lombok automatic generation of getters, setters, equals, hashCode and toString.
  *
  * @author sarms@ucar.edu
  */
+@Data
 public class ParsedFile {
 
   private List<String> header;
   private Map<Integer, List<String>> stringData;
   private Map<Integer, Array> arrayData;
   private Map<Integer, DataType> dataTypes;
-
-  /**
-   * Returns the headers of a data file.
-   *
-   * @return The headers.
-   */
-  public List<String> getHeader() {
-    return header;
-  }
-
-
-  /**
-   * Returns the parsed data of a data file as a list of Strings.
-   *
-   * @return The parsed data (Strings).
-   */
-  public Map<Integer, List<String>> getStringData() {
-    return stringData;
-  }
-
-
-  /**
-   * Returns the parsed data of a data file as a list of Array types.
-   *
-   * @return The parsed data (Arrays).
-   */
-  public Map<Integer, Array> getArrayData() {
-    return arrayData;
-  }
 
   /**
    *

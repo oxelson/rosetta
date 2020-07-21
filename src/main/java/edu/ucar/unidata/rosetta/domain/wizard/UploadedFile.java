@@ -8,16 +8,18 @@ package edu.ucar.unidata.rosetta.domain.wizard;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 /**
- * Form-backing object for the wizard to collect an uploaded file. Lombok automatic generation of getters, setters,
- * equals, hashCode and toString.
+ * Form-backing object for the wizard to collect an uploaded file. Lombok automatic generation of noop constructor,
+ * getters, setters, equals, hashCode and toString.
  *
  * @author oxelson
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class UploadedFile extends WizardData implements Serializable {
 
   private String description;
@@ -26,8 +28,6 @@ public class UploadedFile extends WizardData implements Serializable {
   private FileType fileType;
   private String id;
   private boolean required;
-
-  public UploadedFile() {}
 
   public UploadedFile(CommonsMultipartFile file, String fileName, FileType fileType) {
     setFile(file);

@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
  * @author oxelson
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class UploadedFileCmd extends WizardData {
 
   private String dataFileType;

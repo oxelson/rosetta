@@ -6,14 +6,17 @@
 package edu.ucar.unidata.rosetta.domain.wizard;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
- * Form-backing object to collect data from the wizard. Lombok automatic generation of getters, setters, equals,
+ * Form-backing object to collect data from the wizard. Lombok automatic generation of noop constructor, getters,
+ * setters, equals,
  * hashCode and toString.
  *
  * @author oxelson
  */
 @Data
+@NoArgsConstructor
 public class WizardData {
 
   private String cfType;
